@@ -1,1 +1,1 @@
-# ticket-hub
+# Ticket Hub
