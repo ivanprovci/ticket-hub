@@ -1,130 +1,81 @@
-"use client"
-// This is the Events search page. Users should be allowed to prompt search filters according to their location, date abd type of event.
-// Once selected filters search button should display results as cards with corresponding options.
+"use client";
 import React, { useState } from 'react';
+import ticketmasterService from '../../services/ticketmasterService';
+import SearchForm from './SearchForm';
 
-	const categories = ['Category1', 'Category2', 'Category3', 'Category4']; 
+const EventsPage: React.FC = () => {
+  const [events, setEvents] = useState([]);
 
-	const SearchForm: React.FC = () => {
-		const [isCategoryOpen, setIsCategoryOpen] = useState(false); 
-		const [selectedCategory, setSelectedCategory] = useState('All categories'); 
-		const [location, setLocation] = useState(''); 
-		
-		const toggleCategoryDropdown = () => { setIsCategoryOpen(!isCategoryOpen); }; 
-		
-		const handleCategoryClick = (category: string) => { setSelectedCategory(category); 
-		setIsCategoryOpen(false); }; 
-		
-		const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => { setLocation(event.target.value); }; 
-		
-		const handleSubmit = (event: React.FormEvent) => { 
-		event.preventDefault(); 
-		console.log(`Category: ${selectedCategory}, Location: ${location}`);
-		 }; 
-		
-		
-		
-	return (
-		
-		// Search filter form
-		<form onSubmit={handleSubmit} className=" w-full lg:w-1/2 gap-2 flex justify-center items-center mx-auto mt-10 mb-4 p-8 bg-blue-600 shadow-md rounded-lg">
-				<div className="mb-4"> 
-					<label htmlFor="location" className="block text-md font-medium text-black mb-2"> 
-						Location 
-					</label>
-		 			<input type="text" id="location" value={location} onChange={handleLocationChange} className="w-full bg-white px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter location" /> 
-				</div> 
-		{/* Categories Filter */}
-			<div className="mb-4 "> 
-					<label htmlFor="category" className="block text-md font-medium text-black mb-2">
- 						Category 
-					</label> 
-						<button 
-							type="button" 
-							onClick={toggleCategoryDropdown} 
-							className=" flex items-center justify-between px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500" > 
-							{selectedCategory} 
-							<svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /> </svg> 	
-						</button> 
-	
-						{isCategoryOpen && ( 
-				<div className="absolute z-10  mt-2 bg-white rounded-md shadow-lg"> 
-					<ul className="py-1 text-sm text-gray-700"> 
-						{categories.map((category) => 
-							(<li key={category}> 
-								<button 
-									type="button" 
-									onClick={() => handleCategoryClick(category)} 
-									className="block w-full px-4 py-2 text-left hover:bg-gray-100" > 
-									{category} 
-								</button> 
-							</li> ))} 
-						</ul>
- 				</div>)} 
-			</div> 
-						<div className="mt-4 ">
-						<button type="submit" className="w-full px-4 py-2 text-white bg-blue-800 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" > Search 
-						</button> 
-						</div>				
-		</form>
-		);
-	}
+  const handleSearch = async (location: string, category: string) => {
+    try {
+      const data = await ticketmasterService.getAllEvents({ location, category });
+      console.log('Fetched data:', data); // Debugging statement
 
-	export default function Events() {
-		return(
-			// Parent div first, then Search div, then results div
-	<div>
-		<div className="bg-sky-500 w-full justify-center items-center text-center p-8 flex-col"
-					style={{height:'400px'
-					}}>
-						<h2 className=" text-4xl font-bold text-white mt-2">Search for an event your looking for!</h2>
-						<SearchForm/>
-		</div>
+      if (data._embedded && data._embedded.events) {
+        const filteredEvents = data._embedded.events.filter((event: any) => {
+          const eventLocation = event._embedded?.venues?.[0]?.city?.name?.toLowerCase() || '';
+          const eventCategory = event.classifications?.[0]?.segment?.name?.toLowerCase() || '';
 
+          console.log(`Event: ${event.name}, Location: ${eventLocation}, Category: ${eventCategory}`); // Debugging statement
 
-				{/* Search Results Div */}
-		<div className="flex flex-col mt-6 p-8 lg:px-24  space-y-6 justify-center items-center ">
-				<div className="bg-blue-500 w-full  h-64 rounded-lg text-center space-y-24 p-6  ">
-					<h1 className=" font-bold  text-4xl text-start "> Event Title</h1>
-						<button
-          					type="button"
-          					className=" rounded border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50 transition duration-150 ease-in-out hover:border-neutral-100 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-100 focus:border-neutral-100 focus:text-neutral-100 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-neutral-200 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-          					data-twe-ripple-init
-          					data-twe-ripple-color="light">
-          					Check Event
-        				</button>
-				</div>
+          return (
+            eventLocation.includes(location.toLowerCase()) &&
+            (category === 'All categories' || eventCategory === category.toLowerCase())
+          );
+        });
 
-				<div className="bg-blue-500 w-full h-64 rounded-lg text-center space-y-24 p-6  ">
-					<h1 className=" font-bold  text-4xl text-start"> Event Title</h1>
-						<button
-          					type="button"
-          					className="rounded border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50 transition duration-150 ease-in-out hover:border-neutral-100 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-100 focus:border-neutral-100 focus:text-neutral-100 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-neutral-200 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-          					data-twe-ripple-init
-          					data-twe-ripple-color="light">
-          					Check Event
-        				</button>
-				</div>
+        console.log('Filtered events:', filteredEvents); // Debugging statement
+        setEvents(filteredEvents);
+      } else {
+        console.log('No events found in the fetched data.'); // Debugging statement
+        setEvents([]); // No events found
+      }
+    } catch (error) {
+      console.error('Error fetching events', error);
+    }
+  };
 
-				<div className="bg-blue-500 w-full h-64 rounded-lg text-center space-y-24 p-6  ">
-					<h1 className=" font-bold  text-4xl text-start"> Event Title</h1>
-						<button
-         					type="button"
-          					className="rounded border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50 transition duration-150 ease-in-out hover:border-neutral-100 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-100 focus:border-neutral-100 focus:text-neutral-100 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-neutral-200 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-          					data-twe-ripple-init
-          					data-twe-ripple-color="light">
-          					Check Event
-        				</button>
-				</div>
+  return (
+    <div>
+      <div
+        className="bg-sky-500 w-full justify-center items-center text-center p-8 flex-col"
+        style={{ height: '450px' }}
+      >
+        <h2 className="text-4xl font-bold text-white mt-2">Search for an event you're looking for!</h2>
+        <SearchForm onSearch={handleSearch} />
+      </div>
 
-		</div>
+      {/* Search Results Div */}
+      {events.length > 0 && (
+        <div className="flex flex-wrap mt-6 p-8 lg:px-24 justify-center items-center space-y-6">
+          {events.map((event: any) => (
+            <div
+              key={event.id}
+              className="bg-white shadow-lg rounded-lg overflow-hidden w-full md:w-1/2 lg:w-1/3 m-4"
+            >
+              <img
+                src={event.images[0].url}
+                alt={event.name}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h1 className="font-bold text-2xl mb-2">{event.name}</h1>
+                <p className="text-gray-600 mb-4">{event.dates.start.localDate}</p>
+                <a href={`/events/${event.id}`}>
+                  <button
+                    type="button"
+                    className="rounded border-2 border-blue-500 px-4 py-2 text-blue-500 font-medium uppercase leading-normal transition duration-150 ease-in-out hover:bg-blue-500 hover:text-white"
+                  >
+                    Check Event
+                  </button>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
-
-
-
-	</div>
-			
-
-		)
-
-}
+export default EventsPage;
