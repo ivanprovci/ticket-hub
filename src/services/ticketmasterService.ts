@@ -4,7 +4,7 @@ const BASE_URL = 'https://app.ticketmaster.com/discovery/v2/';
 const ticketmasterService = {
   searchEvents: async (keyword: string) => {
     try {
-      const response = await fetch(`${BASE_URL}events?apikey=${API_KEY}&keyword=${keyword}`);
+      const response = await fetch(`${BASE_URL}events?apikey=${API_KEY}&keyword=${keyword}&sort=date,asc`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -45,7 +45,7 @@ const ticketmasterService = {
     try {
       const categoryParam = category !== 'All categories' ? `&classificationName=${category}` : '';
       const response = await fetch(
-        `${BASE_URL}events?apikey=${API_KEY}&city=${location}${categoryParam}`
+        `${BASE_URL}events?apikey=${API_KEY}&city=${location}${categoryParam}&sort=date,asc`
       );
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -59,4 +59,4 @@ const ticketmasterService = {
   },
 };
 
-export default ticketmasterService;
+export default ticketmasterService; 
