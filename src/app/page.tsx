@@ -54,7 +54,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <h1 className="text-center text-3xl font-bold mt-8 text-black">Explore Popular Events Below</h1>
+        <h1 className="text-center text-3xl font-bold mt-8 text-black">Explore Upcoming Events</h1>
         {/* Event Cards */}
         <div className="flex flex-wrap mt-6 p-8 lg:px-24 justify-center space-y-6">
           {popularEvents.length > 0 ? (
