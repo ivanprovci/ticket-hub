@@ -1,4 +1,3 @@
-// SearchForm.tsx
 "use client";
 import React, { useState } from 'react';
 
@@ -24,6 +23,10 @@ const SearchForm: React.FC<{ onSearch: (location: string, category: string) => v
     setSuggestions([]);
   };
 
+  const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(event.target.value);
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     onSearch(location, selectedCategory);
@@ -39,6 +42,7 @@ const SearchForm: React.FC<{ onSearch: (location: string, category: string) => v
           type="text"
           id="location"
           value={location}
+          onChange={handleLocationChange} // Added onChange handler
           className="w-full bg-white px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           placeholder="Enter location"
         />
