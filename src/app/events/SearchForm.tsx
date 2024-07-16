@@ -1,7 +1,6 @@
 // SearchForm.tsx
 "use client";
 import React, { useState } from 'react';
-import geonamesService from '../../services/geonamesService';
 
 const categories = ['All categories', 'Music', 'Sports', 'Arts & Theater', 'Film'];
 

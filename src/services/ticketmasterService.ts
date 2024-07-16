@@ -1,20 +1,7 @@
-const API_KEY = process.env.NEXT_PUBLIC_TICKETMASTER_API_KEY;
+const API_KEY = '9XsAZGszX3TfvKUnYx7Ny0QP51mZR6n6';
 const BASE_URL = 'https://app.ticketmaster.com/discovery/v2/';
 
 const ticketmasterService = {
-  searchEvents: async (keyword: string) => {
-    try {
-      const response = await fetch(`${BASE_URL}events?apikey=${API_KEY}&keyword=${keyword}&sort=date,asc`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching events from Ticketmaster', error);
-      throw error;
-    }
-  },
   getEventDetails: async (eventId: string) => {
     try {
       const response = await fetch(`${BASE_URL}events/${eventId}?apikey=${API_KEY}`);
@@ -30,7 +17,7 @@ const ticketmasterService = {
   },
   getPopularEvents: async () => {
     try {
-      const response = await fetch(`${BASE_URL}events?apikey=${API_KEY}&sort=date,asc`);
+      const response = await fetch(`${BASE_URL}events?apikey=${API_KEY}&sort=date,asc&startDateTime=${new Date().toISOString().slice(0, 19)}Z`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -41,11 +28,11 @@ const ticketmasterService = {
       throw error;
     }
   },
-  getAllEvents: async ({ location, category }: { location: string; category: string }) => {
+  searchEvents: async ({ location, category }: { location: string; category: string }) => {
     try {
       const categoryParam = category !== 'All categories' ? `&classificationName=${category}` : '';
       const response = await fetch(
-        `${BASE_URL}events?apikey=${API_KEY}&city=${location}${categoryParam}&sort=date,asc`
+        `${BASE_URL}events?apikey=${API_KEY}&city=${location}${categoryParam}&sort=date,asc&startDateTime=${new Date().toISOString().slice(0, 19)}Z`
       );
       if (!response.ok) {
         throw new Error('Network response was not ok');

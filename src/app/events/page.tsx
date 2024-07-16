@@ -18,7 +18,7 @@ const EventsPage: React.FC = () => {
 
   const loadEvents = async (location: string, category: string) => {
     try {
-      const data = await ticketmasterService.getAllEvents({ location, category });
+      const data = await ticketmasterService.searchEvents({ location, category });
 
       if (data._embedded && data._embedded.events) {
         setEvents(data._embedded.events);
@@ -63,7 +63,7 @@ const EventsPage: React.FC = () => {
             <div key={event.id} className="bg-white shadow-lg rounded-lg overflow-hidden w-full md:w-1/2 lg:w-1/3 m-4">
               <img src={event.images[0].url} alt={event.name} className="w-full h-48 object-cover" />
               <div className="p-4">
-                <h1 className="font-bold text-2xl mb-2">{event.name}</h1>
+                <h1 className="font-bold text-2xl mb-2 text-black">{event.name}</h1>
                 <p className="text-gray-600 mb-4">{event.dates.start.localDate}</p>
                 <a href={event.url} target="_blank" rel="noopener noreferrer">
                   <button
