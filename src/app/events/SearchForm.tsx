@@ -19,25 +19,6 @@ const SearchForm: React.FC<{ onSearch: (location: string, category: string) => v
     setIsCategoryOpen(false);
   };
 
-  const handleLocationChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setLocation(value);
-
-    if (value.length > 2) {
-      try {
-        const results = await geonamesService.getCitySuggestions(value);
-        console.log('City suggestions:', results); // Debugging statement
-        const cityNames = results.map((city: any) => city.name);
-        console.log('City names:', cityNames); // Debugging statement
-        setSuggestions(cityNames);
-      } catch (error) {
-        console.error('Error fetching city suggestions', error);
-      }
-    } else {
-      setSuggestions([]);
-    }
-  };
-
   const handleSuggestionClick = (suggestion: string) => {
     setLocation(suggestion);
     setSuggestions([]);
@@ -58,7 +39,6 @@ const SearchForm: React.FC<{ onSearch: (location: string, category: string) => v
           type="text"
           id="location"
           value={location}
-          onChange={handleLocationChange}
           className="w-full bg-white px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           placeholder="Enter location"
         />
