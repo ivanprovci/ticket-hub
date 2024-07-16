@@ -7,22 +7,25 @@ const EventsPage: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const eventsPerPage = 10;
-  const [searchParams, setSearchParams] = useState<{ location: string; category: string }>({
+  const [searchParams, setSearchParams] = useState<{ location: string; country: string; category: string }>({
     location: '',
+    country: '',
     category: 'All categories'
   });
-  
+
   useEffect(() => {
-    loadEvents(searchParams.location, searchParams.category);
-  }, [currentPage, searchParams]); 
+    loadEvents(searchParams.location, searchParams.country, searchParams.category);
+  }, [currentPage, searchParams]);
 
-  const loadEvents = async (location: string, category: string) => {
+  const loadEvents = async (location: string, country: string, category: string) => {
+    console.log("Loading events with:", { location, country, category });
     try {
-      const data = await ticketmasterService.searchEvents({ location, category });
-
+      const data = await ticketmasterService.searchEvents({ location, country, category });
+      console.log("Loaded events data:", data);
       if (data._embedded && data._embedded.events) {
         setEvents(data._embedded.events);
       } else {
+        console.warn("No events found");
         setEvents([]);
       }
     } catch (error) {
@@ -38,9 +41,10 @@ const EventsPage: React.FC = () => {
     setCurrentPage(prevPage => prevPage - 1);
   };
 
-  const handleSearch = (location: string, category: string) => {
-    setSearchParams({ location, category });
-    setCurrentPage(1); 
+  const handleSearch = (location: string, country: string, category: string) => {
+    console.log("Search parameters updated:", { location, country, category });
+    setSearchParams({ location, country, category });
+    setCurrentPage(1);
   };
 
   const indexOfLastEvent = currentPage * eventsPerPage;
@@ -50,8 +54,7 @@ const EventsPage: React.FC = () => {
   return (
     <div>
       <div
-        className="bg-sky-500 w-full justify-center items-center text-center p-8 flex-col"
-        style={{ height: '450px' }}
+        className="bg-sky-500 w-full flex justify-center items-center text-center p-8 flex-col h-96 md:h-450"
       >
         <h2 className="text-4xl font-bold text-white mt-2">Search for an event you're looking for!</h2>
         <SearchForm onSearch={handleSearch} />
@@ -106,4 +109,3 @@ const EventsPage: React.FC = () => {
 };
 
 export default EventsPage;
-

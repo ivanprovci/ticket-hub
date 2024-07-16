@@ -2,11 +2,16 @@
 import React, { useState } from 'react';
 
 const categories = ['All categories', 'Music', 'Sports', 'Arts & Theater', 'Film'];
+const countryCodes: { [key: string]: string } = {
+  Canada: 'CA',
+  // Add other country names and their respective codes here
+};
 
-const SearchForm: React.FC<{ onSearch: (location: string, category: string) => void }> = ({ onSearch }) => {
+const SearchForm: React.FC<{ onSearch: (location: string, country: string, category: string) => void }> = ({ onSearch }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All categories');
   const [location, setLocation] = useState('');
+  const [country, setCountry] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const toggleCategoryDropdown = () => {
@@ -27,13 +32,32 @@ const SearchForm: React.FC<{ onSearch: (location: string, category: string) => v
     setLocation(event.target.value);
   };
 
+  const handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCountry(event.target.value);
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSearch(location, selectedCategory);
+    const countryCode = countryCodes[country] || country; // Use the country code if available, otherwise use the entered value
+    console.log("Form submitted with:", { location, country: countryCode, selectedCategory });
+    onSearch(location, countryCode, selectedCategory);
   };
 
   return (
     <form onSubmit={handleSubmit} className="w-full lg:w-1/2 gap-2 flex flex-col justify-center items-center mx-auto mt-10 mb-4 p-8 bg-blue-600 shadow-md rounded-lg">
+      <div className="mb-4 w-full relative">
+        <label htmlFor="country" className="block text-md font-medium text-black mb-2">
+          Enter Country
+        </label>
+        <input
+          type="text"
+          id="country"
+          value={country}
+          onChange={handleCountryChange}
+          className="w-full bg-white px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="Enter country"
+        />
+      </div>
       <div className="mb-4 w-full relative">
         <label htmlFor="location" className="block text-md font-medium text-black mb-2">
           Enter City
@@ -42,7 +66,7 @@ const SearchForm: React.FC<{ onSearch: (location: string, category: string) => v
           type="text"
           id="location"
           value={location}
-          onChange={handleLocationChange} // Added onChange handler
+          onChange={handleLocationChange}
           className="w-full bg-white px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           placeholder="Enter location"
         />

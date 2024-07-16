@@ -28,16 +28,19 @@ const ticketmasterService = {
       throw error;
     }
   },
-  searchEvents: async ({ location, category }: { location: string; category: string }) => {
+  searchEvents: async ({ location, country, category }: { location: string; country: string; category: string }) => {
     try {
+      const countryParam = country ? `&countryCode=${country}` : '';
       const categoryParam = category !== 'All categories' ? `&classificationName=${category}` : '';
       const response = await fetch(
-        `${BASE_URL}events?apikey=${API_KEY}&city=${location}${categoryParam}&sort=date,asc&startDateTime=${new Date().toISOString().slice(0, 19)}Z`
+        `${BASE_URL}events?apikey=${API_KEY}&city=${location}${countryParam}${categoryParam}&sort=date,asc&startDateTime=${new Date().toISOString().slice(0, 19)}Z`
       );
+      console.log("API Request URL:", response.url); // Log the API request URL
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      console.log("API Response Data:", data); // Log the API response data
       return data;
     } catch (error) {
       console.error('Error fetching events from Ticketmaster', error);
@@ -46,4 +49,4 @@ const ticketmasterService = {
   },
 };
 
-export default ticketmasterService; 
+export default ticketmasterService;
