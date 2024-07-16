@@ -56,7 +56,7 @@ export default function Home() {
         </div>
         <h1 className="text-center text-3xl font-bold mt-8 text-black">Explore Popular Events Below</h1>
         {/* Event Cards */}
-        <div className="flex flex-wrap mt-6 p-8 lg:px-24 justify-center items-center space-y-6">
+        <div className="flex flex-wrap mt-6 p-8 lg:px-24 justify-center space-y-6">
           {popularEvents.length > 0 ? (
             popularEvents.map((event: any) => (
               <div
@@ -71,12 +71,12 @@ export default function Home() {
                 <div className="p-4">
                   <h1 className="font-bold text-black text-2xl mb-2">{event.name}</h1>
                   <p className="text-gray-600 mb-4">{event.dates.start.localDate}</p>
-                  <a href={`/events/${event.id}`}>
+                  <a href={event.url} target="_blank" rel="noopener noreferrer">
                     <button
                       type="button"
                       className="rounded border-2 border-blue-500 px-4 py-2 text-blue-500 font-medium uppercase leading-normal transition duration-150 ease-in-out hover:bg-blue-500 hover:text-white"
                     >
-                      Check Event
+                      Buy Tickets
                     </button>
                   </a>
                 </div>
