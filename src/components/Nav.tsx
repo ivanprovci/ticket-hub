@@ -107,8 +107,10 @@ const Nav = () => {
             	</ul>
 
             {/* Sign up button */}
+            <Link href="/sign-up">
+            
 			<button className="bg-blue-400 rounded-md p-2 hover:bg-blue-500 text-white">Sign up</button>
-			
+			</Link>
 		  </div>
         </div>
       </div>
