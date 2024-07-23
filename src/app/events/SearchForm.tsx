@@ -28,7 +28,7 @@ const SearchForm: React.FC<{ onSearch: (location: string, country: string, categ
 
   return (
     <form onSubmit={handleSubmit} className="w-full lg:w-1/2 gap-2 flex flex-col justify-center items-center mx-auto mt-10 mb-4 p-8 bg-blue-600 shadow-md rounded-lg">
-      <div className="mb-4 w-full relative">
+      <div className="mb-4 w-full">
         <label htmlFor="country" className="block text-md font-medium text-black mb-2">
           Select Country
         </label>
@@ -46,7 +46,7 @@ const SearchForm: React.FC<{ onSearch: (location: string, country: string, categ
           ))}
         </select>
       </div>
-      <div className="mb-4 w-full relative">
+      <div className="mb-4 w-full">
         <label htmlFor="location" className="block text-md font-medium text-black mb-2">
           Enter City
         </label>
@@ -72,7 +72,7 @@ const SearchForm: React.FC<{ onSearch: (location: string, country: string, categ
           </ul>
         )}
       </div>
-      <div className="mb-4 relative w-full">
+      <div className="mb-4 w-full">
         <label htmlFor="category" className="block text-md font-medium text-black mb-2">
           Category
         </label>
