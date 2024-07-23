@@ -26,14 +26,14 @@ export default function Home() {
       {/* Hero section */}
       <div>
         <div
-          className="overflow-hidden bg-cover bg-no-repeat text-center"
+          className="overflow-hidden bg-cover bg-no-repeat text-center "
           style={{
-            backgroundImage: "url('')",
-            height: '400px',
+            backgroundImage: "url('../assets/party.jpg')",
+            height: '400px'
           }}
         >
           <div
-            className="bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden"
+            className="bottom-0 left-0  right-0 top-0 h-full w-full overflow-hidden"
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
           >
             <div className="flex h-full items-center justify-center">
@@ -61,7 +61,7 @@ export default function Home() {
             popularEvents.map((event: any) => (
               <div
                 key={event.id}
-                className="bg-white shadow-lg rounded-lg overflow-hidden w-full md:w-1/2 lg:w-1/3 m-4"
+                className="bg-cyan-400 shadow-lg  border-4 border-white rounded-lg overflow-hidden w-full md:w-1/2 lg:w-1/3 m-4"
               >
                 <img
                   src={event.images[0].url}

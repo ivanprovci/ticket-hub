@@ -54,16 +54,16 @@ const EventsPage: React.FC = () => {
   return (
     <div>
       <div
-        className="bg-sky-500 w-full flex justify-center items-center text-center p-8 flex-col h-96 md:h-450"
+        className="bg-sky-500 w-full flex justify-center items-center text-center p-8 flex-col md:h-450" style={{height: '600px'}}
       >
-        <h2 className="text-4xl font-bold text-white mt-2">Search for an event you're looking for!</h2>
+        <h2 className=" text-2xl lg:text-4xl font-bold text-white mt-2">Search for an event you're looking for!</h2>
         <SearchForm onSearch={handleSearch} />
       </div>
 
       {currentEvents.length > 0 ? (
         <div className="flex flex-wrap mt-6 p-8 lg:px-24 justify-center items-center space-y-6">
           {currentEvents.map((event: any) => (
-            <div key={event.id} className="bg-white shadow-lg rounded-lg overflow-hidden w-full md:w-1/2 lg:w-1/3 m-4">
+            <div key={event.id} className="bg-cyan-400  border-4 border-white shadow-lg rounded-lg overflow-hidden w-full md:w-1/2 lg:w-1/3 m-4">
               <img src={event.images[0].url} alt={event.name} className="w-full h-48 object-cover" />
               <div className="p-4">
                 <h1 className="font-bold text-2xl mb-2 text-black">{event.name}</h1>
