@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import ticketmasterService from '../services/ticketmasterService';
+import partyImage from '../assets/party.png';
+
 
 export default function Home() {
   const [popularEvents, setPopularEvents] = useState([]);
@@ -26,9 +28,9 @@ export default function Home() {
       {/* Hero section */}
       <div>
         <div
-          className="overflow-hidden bg-cover bg-no-repeat text-center "
+          className=" bg-cover bg-repeat bg-center text-center "
           style={{
-            backgroundImage: "url('../assets/party.jpg')",
+            backgroundImage: `url(${partyImage})`,
             height: '400px'
           }}
         >

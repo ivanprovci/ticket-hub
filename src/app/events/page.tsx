@@ -54,7 +54,7 @@ const EventsPage: React.FC = () => {
   return (
     <div>
       <div
-        className="bg-sky-500 w-full flex justify-center items-center text-center p-8 flex-col md:h-450" style={{height: '600px'}}
+        className="bg-sky-800 w-full flex justify-center items-center text-center p-8 flex-col md:h-450" style={{height: '600px'}}
       >
         <h2 className=" text-2xl lg:text-4xl font-bold text-white mt-2">Search for an event you're looking for!</h2>
         <SearchForm onSearch={handleSearch} />
