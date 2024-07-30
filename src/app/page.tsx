@@ -31,7 +31,7 @@ export default function Home() {
 						className="bottom-0 left-0  right-0 top-0 h-full w-full overflow-hidden"
 						style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}>
 						<div className="flex h-full items-center justify-center">
-							<div className="text-white">
+							<div className="text-white text-center">
 								<h2 className="mb-4 text-4xl font-semibold">
 									Welcome to Ticket Hub
 								</h2>

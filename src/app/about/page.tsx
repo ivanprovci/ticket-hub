@@ -18,7 +18,7 @@ export default function About() {
 					<div className="flex flex-col  mt-2 space-y-8 ">
 						<h2 className=" text-6xl font-bold text-white mt-2 text-center lg:text-end  mr-6 mb-4">Our Values</h2>
 
-						<div className=" float-start flex flex-col lg:flex lg:flex-row w-full lg:w-3/4 h-full gap-6 p-8  ">
+						<div className="  flex flex-col lg:flex lg:flex-row w-full  h-full gap-6 p-6  ">
 
 							<div className=" flex flex-col text-white h-full border-2 rounded  w-full  p-3 text-center bg-blue-800 transition-transform hover:-translate-y-5">
 								<h1 className=" font-bold mb-3 text-xl">Innovation</h1>
@@ -33,6 +33,11 @@ export default function About() {
 							<div className=" flex flex-col text-white h-full border-2 rounded  w-full  p-3 text-center bg-blue-800 transition-transform hover:-translate-y-7">
 								<h1 className=" font-bold mb-3 text-xl">Customer-Centric</h1>
 								<p className="font-sm text-md">Putting the needs and satisfaction of customers at the forefront of decision-making.</p>
+								</div>	
+
+							<div className=" flex flex-col text-white h-full border-2 rounded  w-full  p-3 text-center bg-blue-800 transition-transform hover:-translate-y-7">
+								<h1 className=" font-bold mb-3 text-xl">Transparency</h1>
+								<p className="font-sm text-md">Ensuring open and honest communication to organizational stakeholders.</p>
 								</div>	
 
 						</div>
